@@ -17,6 +17,6 @@
             android:drawSelectorOnTop="false"
             android:scrollbars="vertical" >
         </ListView>
-    </LinearLayout>
+    </LinearLayout> 
 
 </LinearLayout>
