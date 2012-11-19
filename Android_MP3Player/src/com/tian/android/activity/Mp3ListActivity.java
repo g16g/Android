@@ -1,12 +1,13 @@
 package com.tian.android.activity;
 
+import android.app.ListActivity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
 import com.example.android_mp3_01_player.R;
 
-import android.os.Bundle;
-import android.app.Activity;
-import android.view.Menu;
-
-public class Mp3ListActivity extends Activity {
+public class Mp3ListActivity extends ListActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -14,9 +15,21 @@ public class Mp3ListActivity extends Activity {
         setContentView(R.layout.activity_mp3_list);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_mp3_list, menu);
-        return true;
-    }
+    /**
+     * 在用户点击MENU按钮之后会调用该方法，我们可以在这个方法当中加入自己的按钮控件
+     */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		menu.add(0, 1, 1, R.string.mp3list_update);
+		menu.add(0, 2, 2, R.string.mp3list_about);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		System.out.println("itemId = "+item.getItemId());
+		return super.onOptionsItemSelected(item);
+	}
+    
+
 }
