@@ -9,6 +9,8 @@ import com.example.android_mp3_01_player.R;
 
 public class Mp3ListActivity extends ListActivity {
 
+	private static final int UPDATE = 1;
+	private static final int ABOUT = 2;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,14 +22,19 @@ public class Mp3ListActivity extends ListActivity {
      */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(0, 1, 1, R.string.mp3list_update);
-		menu.add(0, 2, 2, R.string.mp3list_about);
+		menu.add(0, UPDATE, 1, R.string.mp3list_update);
+		menu.add(0, ABOUT, 2, R.string.mp3list_about);
 		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		System.out.println("itemId = "+item.getItemId());
+		if(item.getItemId() == UPDATE){
+			//用户点击了更新按钮
+		}else if(item.getItemId() == ABOUT){
+			//用户点击了关于按钮
+		}
 		return super.onOptionsItemSelected(item);
 	}
     
