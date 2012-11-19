@@ -18,6 +18,7 @@ public class Mp3ListcontentHandler extends DefaultHandler {
 	public void characters(char[] ch, int start, int length)
 			throws SAXException {
 		String temp = new String(ch,start,length);
+		System.out.println("tagName = "+tagName);
 		if(tagName.equals("id")){
 			mp3Info.setId(temp);
 		}else if(tagName.equals("mp3.name")){
@@ -43,10 +44,9 @@ public class Mp3ListcontentHandler extends DefaultHandler {
 	public void endElement(String uri, String localName, String qName)
 			throws SAXException {
 		if(qName.equals("resource")){
-			System.out.println("tagName="+tagName);
 			list.add(mp3Info);
-			tagName = "";
 		}
+		tagName = "";
 	}
 
 	@Override
