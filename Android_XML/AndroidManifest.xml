@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.android_mp3_01_player"
+    package="com.tian.android"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -12,8 +12,8 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.tian.android.activity.Mp3ListActivity"
-            android:label="@string/title_activity_mp3_list" >
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,6 +21,5 @@
             </intent-filter>
         </activity>
     </application>
-	<uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
 </manifest>

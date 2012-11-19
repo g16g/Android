@@ -1,11 +1,26 @@
 package com.tian.android.activity;
 
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParserFactory;
+
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.android_mp3_01_player.R;
+import com.tian.android.download.HttpDownloader;
+import com.tian.android.model.Mp3Info;
+import com.tian.android.xml.Mp3ListcontentHandler;
 
 public class Mp3ListActivity extends ListActivity {
 
@@ -29,9 +44,10 @@ public class Mp3ListActivity extends ListActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		System.out.println("itemId = "+item.getItemId());
 		if(item.getItemId() == UPDATE){
 			//用户点击了更新按钮
+			String xml = downloadXml("http://192.168.0.126:8080/Android_Service/resources.xml");
+			parse(xml);
 		}else if(item.getItemId() == ABOUT){
 			//用户点击了关于按钮
 		}
@@ -39,4 +55,36 @@ public class Mp3ListActivity extends ListActivity {
 	}
     
 
+	/**
+	 * 下载xml文件
+	 * @param url
+	 * @return
+	 */
+	public String downloadXml(String url){
+		HttpDownloader httpDownloader = new HttpDownloader();
+		String xml = httpDownloader.download(url);
+		return xml;
+	}
+	
+	private List<Mp3Info> parse(String xmlStr){
+		SAXParserFactory factory = SAXParserFactory.newInstance();
+		List<Mp3Info> list = new ArrayList<Mp3Info>();
+		try {
+			XMLReader xmlReader = factory.newSAXParser().getXMLReader();
+			Mp3ListcontentHandler handler = new Mp3ListcontentHandler(list);
+			xmlReader.setContentHandler(handler);
+			xmlReader.parse(new InputSource(new StringReader(xmlStr)));
+			for (Mp3Info mp3Info : list) {
+				System.out.println(mp3Info);
+			}
+			
+		} catch (SAXException e) {
+			e.printStackTrace();
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 }
