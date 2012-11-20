@@ -38,7 +38,7 @@ public class Mp3ListActivity extends ListActivity {
 
     /**
      * 在用户点击MENU按钮之后会调用该方法，我们可以在这个方法当中加入自己的按钮控件
-     */
+     */ 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		menu.add(0, UPDATE, 1, R.string.mp3list_update);
