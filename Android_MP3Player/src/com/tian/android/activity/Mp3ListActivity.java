@@ -15,20 +15,25 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.example.android_mp3_01_player.R;
 import com.tian.android.download.HttpDownloader;
 import com.tian.android.model.Mp3Info;
+import com.tian.android.service.DownloadService;
 import com.tian.android.xml.Mp3ListcontentHandler;
 
 public class Mp3ListActivity extends ListActivity {
 
 	private static final int UPDATE = 1;
 	private static final int ABOUT = 2;
+	private List<Mp3Info> mp3Infos = null;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +101,7 @@ public class Mp3ListActivity extends ListActivity {
 	public void updateDate(){
 		//用户点击了更新按钮
 		String xml = downloadXml("http://192.168.0.126:8080/Android_Service/resources.xml");
-		List<Mp3Info> mp3Infos = parse(xml);
+		mp3Infos = parse(xml);
 		List<Map<String,String>> list = new ArrayList<Map<String,String>>();
 		for (Mp3Info map3Info : mp3Infos) {
 			Map<String, String> map = new HashMap<String, String>();
@@ -106,5 +111,21 @@ public class Mp3ListActivity extends ListActivity {
 		}
 		SimpleAdapter simpleAdapter = new SimpleAdapter(Mp3ListActivity.this, list, R.layout.mp3info_item, new String[]{"mp3.name","mp3.size"}, new int[]{R.id.mp3_name,R.id.mp3_size});
 		setListAdapter(simpleAdapter);
+	}
+	
+	/**
+	 * 点击列表的某一列触发
+	 */
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		//用户点击时得到响应的对象
+		Mp3Info mp3Info = mp3Infos.get(position);
+		//生成Intent对象
+		Intent intetn = new Intent();
+		//将mp3Info对象放入到intent对象中
+		intetn.putExtra("mp3", mp3Info);
+		intetn.setClass(this, DownloadService.class);
+		//启动service
+		startService(intetn);
 	}
 }
