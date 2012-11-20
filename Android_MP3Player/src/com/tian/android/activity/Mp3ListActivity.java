@@ -3,7 +3,9 @@ package com.tian.android.activity;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
@@ -16,6 +18,7 @@ import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SimpleAdapter;
 
 import com.example.android_mp3_01_player.R;
 import com.tian.android.download.HttpDownloader;
@@ -30,6 +33,7 @@ public class Mp3ListActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mp3list);
+        updateDate();
     }
 
     /**
@@ -45,15 +49,12 @@ public class Mp3ListActivity extends ListActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if(item.getItemId() == UPDATE){
-			//用户点击了更新按钮
-			String xml = downloadXml("http://192.168.0.126:8080/Android_Service/resources.xml");
-			parse(xml);
+			updateDate();
 		}else if(item.getItemId() == ABOUT){
 			//用户点击了关于按钮
 		}
 		return super.onOptionsItemSelected(item);
 	}
-    
 
 	/**
 	 * 下载xml文件
@@ -66,6 +67,11 @@ public class Mp3ListActivity extends ListActivity {
 		return xml;
 	}
 	
+	/**
+	 * 解析 XMl
+	 * @param xmlStr
+	 * @return
+	 */
 	private List<Mp3Info> parse(String xmlStr){
 		SAXParserFactory factory = SAXParserFactory.newInstance();
 		List<Mp3Info> list = new ArrayList<Mp3Info>();
@@ -74,10 +80,6 @@ public class Mp3ListActivity extends ListActivity {
 			Mp3ListcontentHandler handler = new Mp3ListcontentHandler(list);
 			xmlReader.setContentHandler(handler);
 			xmlReader.parse(new InputSource(new StringReader(xmlStr)));
-			for (Mp3Info mp3Info : list) {
-				System.out.println(mp3Info);
-			}
-			
 		} catch (SAXException e) {
 			e.printStackTrace();
 		} catch (ParserConfigurationException e) {
@@ -86,5 +88,23 @@ public class Mp3ListActivity extends ListActivity {
 			e.printStackTrace();
 		}
 		return list;
+	}
+	
+	/**
+	 * 更新列表
+	 */
+	public void updateDate(){
+		//用户点击了更新按钮
+		String xml = downloadXml("http://192.168.0.126:8080/Android_Service/resources.xml");
+		List<Mp3Info> mp3Infos = parse(xml);
+		List<Map<String,String>> list = new ArrayList<Map<String,String>>();
+		for (Mp3Info map3Info : mp3Infos) {
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("mp3.name", map3Info.getMp3Name());
+			map.put("mp3.size", map3Info.getMp3Size());
+			list.add(map);
+		}
+		SimpleAdapter simpleAdapter = new SimpleAdapter(Mp3ListActivity.this, list, R.layout.mp3info_item, new String[]{"mp3.name","mp3.size"}, new int[]{R.id.mp3_name,R.id.mp3_size});
+		setListAdapter(simpleAdapter);
 	}
 }
