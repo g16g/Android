@@ -5,8 +5,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.os.Environment;
+
+import com.tian.android.model.Mp3Info;
 
 public class FileUtils {
 
@@ -83,5 +87,20 @@ public class FileUtils {
 			}
 		}
 		return file;
+	}
+	
+	public List<Mp3Info> getMp3Fils(String path){
+		List<Mp3Info> list = new ArrayList<Mp3Info>();
+		File file = new File(SDPATH + File.separator+path);
+		File[] files = file.listFiles();
+		for (File file2 : files) {
+			if(file2.getName().endsWith("mp3")){
+				Mp3Info mp3Info = new Mp3Info();
+				mp3Info.setMp3Name(file2.getName());
+				mp3Info.setMp3Size(file2.length()+"");
+				list.add(mp3Info);
+			}
+		}
+		return list;
 	}
 }

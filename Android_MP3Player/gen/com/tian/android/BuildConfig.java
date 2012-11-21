@@ -1,5 +1,5 @@
 /** Automatically generated file. DO NOT MODIFY */
-package com.example.android_mp3_01_player;
+package com.tian.android;
 
 public final class BuildConfig {
     public final static boolean DEBUG = true;

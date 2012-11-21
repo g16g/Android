@@ -23,7 +23,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
-import com.example.android_mp3_01_player.R;
+import com.tian.android.R;
 import com.tian.android.download.HttpDownloader;
 import com.tian.android.model.Mp3Info;
 import com.tian.android.service.DownloadService;
@@ -37,7 +37,7 @@ public class Mp3ListActivity extends ListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.mp3list);
+        setContentView(R.layout.remote_mp3_list);
         updateDate();
     }
 
