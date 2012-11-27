@@ -35,7 +35,9 @@ public class HttpDownloader {
 			e.printStackTrace();
 		}finally{
 			try {
+				System.out.println("*******");
 				buffer.close();
+				System.out.println("---------");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

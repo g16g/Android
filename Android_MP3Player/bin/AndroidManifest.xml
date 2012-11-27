@@ -25,9 +25,15 @@
         <activity android:name=".activity.LocalMp3ListActivity"
             android:label="@string/title_activity_mp3_list">
         </activity>
+        <activity android:name=".activity.Mp3PlayerActivity"
+            android:label="@string/title_activity_mp3_list">
+        </activity>
         
         <service android:name=".service.DownloadService"></service>
     </application>
 	<uses-permission android:name="android.permission.INTERNET"/>
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 </manifest>
