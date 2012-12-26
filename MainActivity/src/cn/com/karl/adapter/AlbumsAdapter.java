@@ -57,6 +57,7 @@ public class AlbumsAdapter extends BaseAdapter {
 		textMusicSinger.setText(m.getName());
 		System.out.println("1111111111111111111111111111");//////////////////////////////////////
 		System.out.println("2222222222222222222222222222222222222222");//////////////////////////////////////
+		System.out.println("333333");//////////////////////////////////////
 	   /*//持续时间
 		TextView textMusicTime=(TextView) convertView.findViewById(R.id.music_item_time);
 		textMusicTime.setText(toTime((int)m.getTime()));*/
